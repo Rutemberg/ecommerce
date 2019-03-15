@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Mar-2019 às 14:43
+-- Generation Time: 15-Mar-2019 às 20:38
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.3.1
 
@@ -38,9 +38,18 @@ CREATE TABLE `tb_addresses` (
   `descity` varchar(32) NOT NULL,
   `desstate` varchar(32) NOT NULL,
   `descountry` varchar(32) NOT NULL,
-  `nrzipcode` int(11) NOT NULL,
+  `deszipcode` char(8) NOT NULL,
+  `desdistrict` varchar(32) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_addresses`
+--
+
+INSERT INTO `tb_addresses` (`idaddress`, `idperson`, `desaddress`, `descomplement`, `descity`, `desstate`, `descountry`, `deszipcode`, `desdistrict`, `dtregister`) VALUES
+(1, 8, 'QNN 19 Conjunto D', '', 'BrasÃ­lia', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-15 19:33:33'),
+(2, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-15 19:36:24');
 
 -- --------------------------------------------------------
 
@@ -66,7 +75,9 @@ INSERT INTO `tb_carts` (`idcart`, `dessessionid`, `iduser`, `deszipcode`, `vlfre
 (1, 'i5t58gthujgo5edpum5uiloqhe', 1, NULL, NULL, NULL, '2019-03-12 19:02:14'),
 (2, 'ktoa73hnu47jui4ldh7sll2l6c', NULL, '72225194', '139.53', 3, '2019-03-13 15:37:47'),
 (3, 'u143qvbdjg9q9famld8g9u7scb', NULL, '72225194', '105.72', 3, '2019-03-14 12:35:27'),
-(4, '8hugfmtma9o8k03s3qa7d1e0c4', 11, '72225194', '83.02', 3, '2019-03-14 18:34:49');
+(4, '8hugfmtma9o8k03s3qa7d1e0c4', 11, '72225194', '83.02', 3, '2019-03-14 18:34:49'),
+(5, 'l3qciaa9ep8bsckh8qc1eolekv', 8, NULL, NULL, NULL, '2019-03-15 13:48:51'),
+(6, '1beret64ocpbj0fpang5er0gph', NULL, '72225194', '83.02', 3, '2019-03-15 18:14:14');
 
 -- --------------------------------------------------------
 
@@ -106,7 +117,8 @@ INSERT INTO `tb_cartsproducts` (`idcartproduct`, `idcart`, `idproduct`, `dtremov
 (17, 3, 6, '2019-03-14 10:29:30', '2019-03-14 13:29:25'),
 (18, 3, 5, NULL, '2019-03-14 13:29:37'),
 (19, 3, 6, NULL, '2019-03-14 13:33:56'),
-(20, 4, 6, NULL, '2019-03-14 20:08:07');
+(20, 4, 6, NULL, '2019-03-14 20:08:07'),
+(21, 6, 6, NULL, '2019-03-15 18:14:14');
 
 -- --------------------------------------------------------
 
@@ -267,7 +279,7 @@ CREATE TABLE `tb_users` (
 INSERT INTO `tb_users` (`iduser`, `idperson`, `deslogin`, `despassword`, `inadmin`, `dtregister`) VALUES
 (1, 1, 'admin', '$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga', 1, '2017-03-13 06:00:00'),
 (7, 7, 'suporte', '$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe', 1, '2017-03-15 19:10:27'),
-(8, 8, 'rutemberg', '$2y$12$wKHASrs7gWXvjPCTLo95Hu2VZQl5KLJYfWQlP13sZ2cPsN7ibR.VG', 0, '2019-03-08 13:34:12'),
+(8, 8, 'rutembergbarbosa@hotmail.com', '$2y$12$wKHASrs7gWXvjPCTLo95Hu2VZQl5KLJYfWQlP13sZ2cPsN7ibR.VG', 0, '2019-03-08 13:34:12'),
 (10, 10, 'peroba', '$2y$12$RT0yt4ihwdarj9HpNhbqFevZLU6trqGXUiiCsCukRLVX6EcR0K2FS', 0, '2019-03-14 15:04:56'),
 (11, 11, 'rutembergbarbosa@outlook.com', '$2y$12$Y6RxCj2Kw.QDKuvUwdDEDu4GtVltouD6hqZFB/cjjS.BCtwGEQh1a', 0, '2019-03-14 18:34:49');
 
@@ -416,19 +428,19 @@ ALTER TABLE `tb_userspasswordsrecoveries`
 -- AUTO_INCREMENT for table `tb_addresses`
 --
 ALTER TABLE `tb_addresses`
-  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_carts`
 --
 ALTER TABLE `tb_carts`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_cartsproducts`
 --
 ALTER TABLE `tb_cartsproducts`
-  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tb_categories`
