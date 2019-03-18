@@ -101,7 +101,7 @@ class Cart extends Model
             ':iduser'=>$this->getiduser(),
             ':deszipcode'=>$this->getdeszipcode(),
             ':vlfreight'=>$this->getvlfreight(),
-            ':nrdays'=>$this->getnrdays(),
+            ':nrdays'=>$this->getnrdays()
         ]);
 
         $this->setData($results[0]);
