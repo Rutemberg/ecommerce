@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Mar-2019 às 20:38
+-- Generation Time: 19-Mar-2019 às 20:01
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.3.1
 
@@ -49,7 +49,10 @@ CREATE TABLE `tb_addresses` (
 
 INSERT INTO `tb_addresses` (`idaddress`, `idperson`, `desaddress`, `descomplement`, `descity`, `desstate`, `descountry`, `deszipcode`, `desdistrict`, `dtregister`) VALUES
 (1, 8, 'QNN 19 Conjunto D', '', 'BrasÃ­lia', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-15 19:33:33'),
-(2, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-15 19:36:24');
+(2, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-15 19:36:24'),
+(3, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-18 19:50:48'),
+(4, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-18 19:52:35'),
+(5, 8, 'QNN 19 Conjunto D', '', 'Brasília', 'DF', 'Brasil', '72225194', 'CeilÃ¢ndia Norte (CeilÃ¢ndia)', '2019-03-19 18:36:25');
 
 -- --------------------------------------------------------
 
@@ -77,7 +80,9 @@ INSERT INTO `tb_carts` (`idcart`, `dessessionid`, `iduser`, `deszipcode`, `vlfre
 (3, 'u143qvbdjg9q9famld8g9u7scb', NULL, '72225194', '105.72', 3, '2019-03-14 12:35:27'),
 (4, '8hugfmtma9o8k03s3qa7d1e0c4', 11, '72225194', '83.02', 3, '2019-03-14 18:34:49'),
 (5, 'l3qciaa9ep8bsckh8qc1eolekv', 8, NULL, NULL, NULL, '2019-03-15 13:48:51'),
-(6, '1beret64ocpbj0fpang5er0gph', NULL, '72225194', '83.02', 3, '2019-03-15 18:14:14');
+(6, '1beret64ocpbj0fpang5er0gph', NULL, '72225194', '83.02', 3, '2019-03-15 18:14:14'),
+(7, 'o4qcg6ieqj24v1gu7gt2ac58bg', NULL, '72225194', '120.77', 3, '2019-03-18 18:10:53'),
+(8, 'trdf4dsjp5045brs41smd7ucvu', 8, '72225194', '84.84', 3, '2019-03-19 18:29:59');
 
 -- --------------------------------------------------------
 
@@ -118,7 +123,11 @@ INSERT INTO `tb_cartsproducts` (`idcartproduct`, `idcart`, `idproduct`, `dtremov
 (18, 3, 5, NULL, '2019-03-14 13:29:37'),
 (19, 3, 6, NULL, '2019-03-14 13:33:56'),
 (20, 4, 6, NULL, '2019-03-14 20:08:07'),
-(21, 6, 6, NULL, '2019-03-15 18:14:14');
+(21, 6, 6, NULL, '2019-03-15 18:14:14'),
+(22, 7, 6, NULL, '2019-03-18 18:10:53'),
+(23, 7, 6, NULL, '2019-03-18 19:51:32'),
+(24, 8, 7, NULL, '2019-03-19 18:33:21'),
+(25, 8, 9, NULL, '2019-03-19 18:53:05');
 
 -- --------------------------------------------------------
 
@@ -153,9 +162,18 @@ CREATE TABLE `tb_orders` (
   `idcart` int(11) NOT NULL,
   `iduser` int(11) NOT NULL,
   `idstatus` int(11) NOT NULL,
+  `idaddress` int(11) NOT NULL,
   `vltotal` decimal(10,2) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_orders`
+--
+
+INSERT INTO `tb_orders` (`idorder`, `idcart`, `iduser`, `idstatus`, `idaddress`, `vltotal`, `dtregister`) VALUES
+(1, 7, 8, 1, 4, '120.77', '2019-03-18 19:52:43'),
+(2, 8, 8, 1, 5, '1370.24', '2019-03-19 18:36:38');
 
 -- --------------------------------------------------------
 
@@ -370,9 +388,10 @@ ALTER TABLE `tb_categories`
 --
 ALTER TABLE `tb_orders`
   ADD PRIMARY KEY (`idorder`),
-  ADD KEY `FK_orders_carts_idx` (`idcart`),
   ADD KEY `FK_orders_users_idx` (`iduser`),
-  ADD KEY `fk_orders_ordersstatus_idx` (`idstatus`);
+  ADD KEY `fk_orders_ordersstatus_idx` (`idstatus`),
+  ADD KEY `fk_orders_carts_idx` (`idcart`),
+  ADD KEY `fk_orders_addresses_idx` (`idaddress`);
 
 --
 -- Indexes for table `tb_ordersstatus`
@@ -428,19 +447,19 @@ ALTER TABLE `tb_userspasswordsrecoveries`
 -- AUTO_INCREMENT for table `tb_addresses`
 --
 ALTER TABLE `tb_addresses`
-  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_carts`
 --
 ALTER TABLE `tb_carts`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_cartsproducts`
 --
 ALTER TABLE `tb_cartsproducts`
-  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tb_categories`
@@ -452,7 +471,7 @@ ALTER TABLE `tb_categories`
 -- AUTO_INCREMENT for table `tb_orders`
 --
 ALTER TABLE `tb_orders`
-  MODIFY `idorder` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idorder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_ordersstatus`
@@ -517,6 +536,7 @@ ALTER TABLE `tb_cartsproducts`
 -- Limitadores para a tabela `tb_orders`
 --
 ALTER TABLE `tb_orders`
+  ADD CONSTRAINT `fk_orders_addresses` FOREIGN KEY (`idaddress`) REFERENCES `tb_addresses` (`idaddress`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_carts` FOREIGN KEY (`idcart`) REFERENCES `tb_carts` (`idcart`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_ordersstatus` FOREIGN KEY (`idstatus`) REFERENCES `tb_ordersstatus` (`idstatus`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_users` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
