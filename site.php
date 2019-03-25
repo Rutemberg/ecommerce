@@ -253,10 +253,35 @@ $app->post("/checkout", function(){
 
     $order->save();
 
-    header("Location: /order/". $order->getidorder());
-    exit;
+    if ($_POST['payment-method'] === '1') {
+        header("Location: /order/". $order->getidorder()."/paypal");
+        exit;
+    }
+
 });
 
+$app->get("/order/:idorder/paypal", function($idorder){
+
+    User::verifyLogin(false);
+
+    $order = new Order();
+
+    $order->get((int)$idorder);
+
+    $cart = $order->getCart();
+
+    $page = new Page([
+        'header'=>false,
+        'footer'=>false
+    ]);
+
+    $page->setTpl("payment-paypal", [
+        'order'=>$order->getValues(),
+        'cart'=>$cart->getValues(),
+        'products'=>$cart->getProducts()
+    ]);
+
+});
 
 $app->get("/login", function(){
 
